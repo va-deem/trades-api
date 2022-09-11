@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Trade {
+  id        Int         @id @default(autoincrement())
+  type      String      @db.VarChar(255)
+  creator   User        @relation(fields: [creatorId], references: [id])
+  creatorId Int
+  symbol    String      @db.VarChar(255)
+  price     Float
+  timestamp DateTime
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model User {
+  id        Int           @id @default(autoincrement())
+  name      String
+  trades    Trade[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
