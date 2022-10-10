@@ -20,7 +20,7 @@ model Trade {
 }
 
 model User {
-  id        Int           @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   name      String
   trades    Trade[]
   createdAt DateTime    @default(now())

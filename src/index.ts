@@ -15,5 +15,5 @@ app.use('/stocks', stocksRouter);
 app.use(notFound());
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

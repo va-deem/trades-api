@@ -37,10 +37,7 @@ $ curl -X POST 'localhost:1234/stocks' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "type": "buy",
-  "user": {
-    "id": 12,
-    "name": "Any"
-  },
+  "userId": 12,
   "symbol": "ABX",
   "price": 134.26,
   "timestamp": "2022-09-11T19:20:30.45+03:00"

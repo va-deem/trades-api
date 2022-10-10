@@ -51,7 +51,7 @@ export const main = async () => {
   } catch (error) {
     process.exit(1);
   } finally {
-    prisma.$disconnect();
+    await prisma.$disconnect();
   }
 };
 

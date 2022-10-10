@@ -1,9 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { ITrade } from '../types';
 
-const prisma = new PrismaClient();
+const prismaClient = new PrismaClient();
 
-export const getTrades = async (userId: number | undefined) => {
+export const getTrades = async (
+  userId: number | undefined,
+  prisma = prismaClient
+) => {
   if (userId) {
     return await prisma.trade.findMany({
       where: { creatorId: userId },
@@ -12,10 +15,10 @@ export const getTrades = async (userId: number | undefined) => {
   return await prisma.trade.findMany();
 };
 
-export const createTrade = async (trade: ITrade) => {
+export const createTrade = async (trade: ITrade, prisma = prismaClient) => {
   const { type, user, symbol, price, timestamp } = trade;
 
-  const newTrade = await prisma.trade.create({
+  return await prisma.trade.create({
     data: {
       type,
       creatorId: user.id,
@@ -24,18 +27,17 @@ export const createTrade = async (trade: ITrade) => {
       timestamp: new Date(timestamp),
     },
   });
-
-  return newTrade;
 };
 
-export const deleteAllTrades = async () => {
+export const deleteAllTrades = async (prisma = prismaClient) => {
   return await prisma.trade.deleteMany();
 };
 
 export const getPeakPrices = async (
   symbol: string | undefined,
   start: string | undefined,
-  end: string | undefined
+  end: string | undefined,
+  prisma = prismaClient
 ) => {
   if (!symbol || !start || !end) throw Error('Some parameter missed');
 
@@ -74,7 +76,7 @@ export const getPeakPrices = async (
   });
 
   if (tradesInPeriod.length === 0) {
-    return { message: 'No trades in given period' };
+    return { message: 'No trades in given period found' };
   } else {
     const prices = tradesInPeriod.map((t) => t.price);
 
