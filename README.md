@@ -1,6 +1,12 @@
-## Trades API
-### Example API for stock trades
+# Trades API
+#### Example API for stock trades allows:
+- to create a trade, 
+- to list all the trades, 
+- to list all the trades from given userId, 
+- to get the maximum trade price for the given currency in the given period of time,
+- to delete all trades from the database.
 ____
+## 1. Running locally
 
 #### Install dependencies
 ```Shell
@@ -13,13 +19,13 @@ Create local PostgreSQL database `tradesDb` (or any other name).
 Add `.env` file to the root directory of the project:
 
 ```Shell
-DATABASE_URL=postgresql://pguser:pgpass@localhost:5432/tradesDB?schema=public
+DATABASE_URL=postgresql://pguser:pgpass@localhost:5432/tradesDb
 ```
-Run migrations:
+#### Run migrations:
 ```Shell
 $ npx prisma migrate dev
 ```
-Run seeding script:
+#### Run seeding script:
 ```Shell
 $ npm run db:seed
 ````  
@@ -28,7 +34,27 @@ $ npm run db:seed
 ```Shell
 $ npm run dev
 ```
-### Some requests to check
+
+## 2. Running tests with Docker
+To start, run:
+```Shell
+$ docker compose up
+```
+These actions are being performed: 
+- creates a container with PostreSQL database,
+- creates a container with an Express app,
+- seeds the created database with some Faker data
+- runs unit tests (mocking Prisma client)
+- runs integration tests using created test database
+
+<sub><sup>(To stop, press Ctrl+C)</sub></sup>
+
+To remove containers and volumes, run:
+```Shell
+$ docker compose down -v
+```
+
+## 3. Some requests to check
 ```Shell
 $ curl 'localhost:1234/stocks' | json_pp
 $ curl 'localhost:1234/stocks?userId=3' | json_pp
