@@ -16,12 +16,12 @@ export const getTrades = async (
 };
 
 export const createTrade = async (trade: ITrade, prisma = prismaClient) => {
-  const { type, user, symbol, price, timestamp } = trade;
+  const { type, userId, symbol, price, timestamp } = trade;
 
   return await prisma.trade.create({
     data: {
       type,
-      creatorId: user.id,
+      creatorId: userId,
       symbol,
       price,
       timestamp: new Date(timestamp),

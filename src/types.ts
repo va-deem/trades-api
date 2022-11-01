@@ -1,13 +1,8 @@
-interface IUser {
-  id: number;
-  name: string;
-}
-
 export type TradeType = 'buy' | 'sell';
 
 export interface ITrade {
   type: TradeType;
-  user: IUser;
+  userId: number;
   symbol: string;
   price: number;
   timestamp: string;
